@@ -205,6 +205,10 @@
 			<artifactId>slf4j-simple</artifactId>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+		</dependency>
 
 		<!-- Provided dependencies -->
 		<dependency>
