@@ -64,7 +64,21 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
+
+
 	</repositories>
+	<pluginRepositories>
+		<!-- TODO: Cayenne 4.0.M2 will soon be posted to Central, So 'cayenne-staging' 
+			repo reference will become unneeded... -->
+		<pluginRepository>
+			<id>cayenne-staging</id>
+			<name>Link Rest Dependencies Repo</name>
+			<url>https://repository.apache.org/content/repositories/orgapachecayenne-1003/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 
 	<dependencyManagement>
 		<dependencies>
@@ -144,36 +158,7 @@
 		</dependencies>
 	</dependencyManagement>
 
-	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.2</version>
-					<configuration>
-						<source>1.8</source>
-						<target>1.8</target>
-					</configuration>
-				</plugin>
 
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-source-plugin</artifactId>
-					<version>2.4</version>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-war-plugin</artifactId>
-					<version>2.6</version>
-					<configuration>
-						<failOnMissingWebXml>false</failOnMissingWebXml>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
 
 	<dependencies>
 
@@ -217,5 +202,65 @@
 		<!-- TODO -->
 
 	</dependencies>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.2</version>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.4</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>2.6</version>
+					<configuration>
+						<failOnMissingWebXml>false</failOnMissingWebXml>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.cayenne.plugins</groupId>
+					<artifactId>maven-cayenne-plugin</artifactId>
+					<version>${cayenne-version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+
+			<!-- Generate Cayenne classes in Maven; of course you can do the same 
+				using Modeler -->
+			<plugin>
+				<groupId>org.apache.cayenne.plugins</groupId>
+				<artifactId>maven-cayenne-plugin</artifactId>
+				<configuration>
+					<map>${project.basedir}/src/main/resources/datamap.map.xml</map>
+				</configuration>
+				<executions>
+					<execution>
+						<id>default-cli</id>
+						<goals>
+							<goal>cgen</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+
 
 </project>
