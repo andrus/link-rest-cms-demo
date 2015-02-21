@@ -51,13 +51,14 @@ public class JaxRsApplication extends ResourceConfig {
 
 		@Override
 		public void onShutdown(Container container) {
-			LOGGER.info("Shutting down Cayenne runtime...");
+			LOGGER.info("Container shutdown, stopping Cayenne runtime...");
 			runtime.shutdown();
 		}
 
 		@Override
 		public void onReload(Container container) {
 			// do nothing
+			LOGGER.info("Container reloaded, do nothing...");
 		}
 
 		@Override
