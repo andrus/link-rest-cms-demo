@@ -1,9 +1,8 @@
 package org.objectstyle.linkrest.cms.derby;
 
-import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -32,17 +31,14 @@ public class DerbyManager {
 		// ensure no derby.log is generated
 		System.setProperty("derby.stream.error.field", DerbyManager.class.getName() + ".DEV_NULL");
 
-		try {
-			this.derbyDir = Files.createTempDirectory("cmsdemo-derby");
-		} catch (IOException e) {
-			throw new RuntimeException("Can't create a temporary directory for Derby DB", e);
-		}
+		String tmpRoot = System.getProperty("java.io.tmpdir");
+		this.derbyDir = Paths.get(tmpRoot, "cmsdemo-derby");
 		
 		LOGGER.info("Derby DB will be stored under " + derbyDir);
 	}
 
 	public String getUrl() {
-		return "jdbc:derby:" + derbyDir + ";create=true";
+		return "jdbc:derby:" + derbyDir + "/db;create=true";
 	}
 
 	public String getDriver() {

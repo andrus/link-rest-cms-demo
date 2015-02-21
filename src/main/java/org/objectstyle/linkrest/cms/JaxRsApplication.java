@@ -1,16 +1,13 @@
 package org.objectstyle.linkrest.cms;
 
-import javax.servlet.ServletContext;
+import javax.annotation.PreDestroy;
 import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Context;
 
 import org.apache.cayenne.access.dbsync.CreateIfNoSchemaStrategy;
 import org.apache.cayenne.access.dbsync.SchemaUpdateStrategy;
 import org.apache.cayenne.configuration.server.ServerRuntime;
 import org.apache.cayenne.configuration.server.ServerRuntimeBuilder;
 import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.server.spi.Container;
-import org.glassfish.jersey.server.spi.ContainerLifecycleListener;
 import org.objectstyle.linkrest.cms.derby.DerbyManager;
 import org.objectstyle.linkrest.cms.resource.BaseLinkRestResource;
 import org.slf4j.Logger;
@@ -30,65 +27,49 @@ public class JaxRsApplication extends ResourceConfig {
 	private ServerRuntime cayenneRuntime;
 	private DerbyManager derbyManager;
 
-	public JaxRsApplication(@Context ServletContext context) {
-
-		// make sure Cayenne and Derby are shutdown properly
-		register(new ShutdownListener());
+	public JaxRsApplication() {
 
 		// init persistence layer...
-		this.derbyManager = initDerby();
-		this.cayenneRuntime = initCayenne(derbyManager.getUrl(), derbyManager.getDriver());
+		this.derbyManager = createDerby();
+		this.cayenneRuntime = createCayenne(derbyManager.getUrl(), derbyManager.getDriver());
 
 		// init and bootstrap LinkRest
-		LinkRestRuntime lrRuntime = initLinkRest(cayenneRuntime);
+		LinkRestRuntime lrRuntime = createLinkRest(cayenneRuntime);
 		register(lrRuntime.getFeature());
 
 		// expose application REST endpoints
 		packages(BaseLinkRestResource.class.getPackage().getName());
 	}
 
-	private static LinkRestRuntime initLinkRest(ServerRuntime cayenneRuntime) {
+	@PreDestroy
+	public void preDestroy() {
+		LOGGER.info("Container shutdown...");
+
+		if (cayenneRuntime != null) {
+			LOGGER.info("Shutting down Cayenne");
+			cayenneRuntime.shutdown();
+			cayenneRuntime = null;
+		}
+
+		if (derbyManager != null) {
+			LOGGER.info("Shutting down Derby");
+			derbyManager.shutdown();
+			derbyManager = null;
+		}
+	}
+
+	private static LinkRestRuntime createLinkRest(ServerRuntime cayenneRuntime) {
 		return new LinkRestBuilder().cayenneRuntime(cayenneRuntime).build();
 	}
 
-	private static ServerRuntime initCayenne(String url, String driver) {
+	private static ServerRuntime createCayenne(String url, String driver) {
 		return new ServerRuntimeBuilder()
 				// ensure test schema is created...
 				.addModule(binder -> binder.bind(SchemaUpdateStrategy.class).to(CreateIfNoSchemaStrategy.class))
 				.jdbcDriver(driver).url(url).addConfig("cayenne-project.xml").build();
 	}
 
-	private static DerbyManager initDerby() {
+	private static DerbyManager createDerby() {
 		return new DerbyManager();
 	}
-
-	class ShutdownListener implements ContainerLifecycleListener {
-
-		@Override
-		public void onShutdown(Container container) {
-			LOGGER.info("Container shutdown, stopping Cayenne and Derby...");
-
-			if (cayenneRuntime != null) {
-				cayenneRuntime.shutdown();
-				cayenneRuntime = null;
-			}
-
-			if (derbyManager != null) {
-				derbyManager.shutdown();
-				derbyManager = null;
-			}
-		}
-
-		@Override
-		public void onReload(Container container) {
-			// do nothing
-			LOGGER.info("Container reloaded, do nothing...");
-		}
-
-		@Override
-		public void onStartup(Container container) {
-			// do nothing
-		}
-	}
-
 }

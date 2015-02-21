@@ -4,14 +4,15 @@
 	 xsi:schemaLocation="http://cayenne.apache.org/schema/7/modelMap http://cayenne.apache.org/schema/7/modelMap.xsd"
 	 project-version="7">
 	<property name="defaultPackage" value="org.objectstyle.linkrest.cms.cayenne"/>
-	<db-entity name="article" catalog="demo">
+	<property name="quoteSqlIdentifiers" value="true"/>
+	<db-entity name="article">
 		<db-attribute name="body" type="LONGVARCHAR" length="16777215"/>
 		<db-attribute name="domain_id" type="BIGINT" isMandatory="true" length="19"/>
 		<db-attribute name="id" type="BIGINT" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="19"/>
 		<db-attribute name="published_on" type="TIMESTAMP" isMandatory="true"/>
 		<db-attribute name="title" type="VARCHAR" isMandatory="true" length="100"/>
 	</db-entity>
-	<db-entity name="domain" catalog="demo">
+	<db-entity name="domain">
 		<db-attribute name="id" type="BIGINT" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="19"/>
 		<db-attribute name="name" type="VARCHAR" isMandatory="true" length="100"/>
 		<db-attribute name="vhost" type="VARCHAR" isMandatory="true" length="100"/>
