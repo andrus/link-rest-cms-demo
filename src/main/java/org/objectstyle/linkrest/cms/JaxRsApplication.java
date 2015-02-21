@@ -4,6 +4,8 @@ import javax.servlet.ServletContext;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Context;
 
+import org.apache.cayenne.access.dbsync.CreateIfNoSchemaStrategy;
+import org.apache.cayenne.access.dbsync.SchemaUpdateStrategy;
 import org.apache.cayenne.configuration.server.ServerRuntime;
 import org.apache.cayenne.configuration.server.ServerRuntimeBuilder;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -17,8 +19,7 @@ import com.nhl.link.rest.runtime.LinkRestBuilder;
 import com.nhl.link.rest.runtime.LinkRestRuntime;
 
 /**
- * A JAX-RS "application" class that demonstrates how to bootstrap LinkRest and
- * Cayenne.
+ * A JAX-RS "application" class bootstraps Cayenne and LinkRest.
  */
 @ApplicationPath("rest")
 public class JaxRsApplication extends ResourceConfig {
@@ -27,8 +28,12 @@ public class JaxRsApplication extends ResourceConfig {
 
 	public JaxRsApplication(@Context ServletContext context) {
 
-		// init Cayenne runtime.. make sure it will be shutdown properly
-		ServerRuntime cayenneRuntime = new ServerRuntimeBuilder().addConfig("cayenne-project.xml").build();
+		// init Cayenne runtime to use in-memory derby database.. make sure
+		// Cayenne will be shutdown properly
+		ServerRuntime cayenneRuntime = new ServerRuntimeBuilder()
+				// ensure test schema is created in the derby in-memory db
+				.addModule(binder -> binder.bind(SchemaUpdateStrategy.class).to(CreateIfNoSchemaStrategy.class))
+				.addConfig("cayenne-project.xml").build();
 		register(new CayenneShutdownListener(cayenneRuntime));
 
 		// bootstrap LinkRest with the minimal set of options
