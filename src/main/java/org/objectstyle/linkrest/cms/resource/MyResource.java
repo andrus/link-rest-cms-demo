@@ -4,7 +4,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
 @Path("hi")
-public class MyResource {
+public class MyResource extends BaseLinkRestResource {
 
 	@GET
 	public String get() {
