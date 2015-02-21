@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.objecstyle</groupId>
+	<artifactId>link-rest-cms-demo</artifactId>
+	<version>1.0-SNAPSHOT</version>
+
+	<name>Webapp: link-rest-cms-demo</name>
+	<description>A simple JAX RS project demonstrating the use of LinkRest framework</description>
+	<packaging>war</packaging>
+
+	<properties>
+
+		<!-- standard Maven properties -->
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<!-- Custom properties (mostly framework versions) -->
+
+		<servlet-api-version>3.0.0.v201112011016</servlet-api-version>
+		<slf4j-version>1.7.10</slf4j-version>
+		<link-rest-version>1.13</link-rest-version>
+		<cayenne-version>4.0.M2</cayenne-version>
+		<jersey-version>2.16</jersey-version>
+	</properties>
+
+	<scm>
+		<connection>scm:git:https://github.com/andrus/link-rest-cms-demo.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com:andrus/link-rest-cms-demo.git</developerConnection>
+		<url>https://github.com/andrus/link-rest-cms-demo</url>
+		<tag>HEAD</tag>
+	</scm>
+
+	<distributionManagement>
+		<repository>
+			<uniqueVersion>false</uniqueVersion>
+			<id>linkrest-releases</id>
+			<name>Deployment Repository</name>
+			<url>http://maven.objectstyle.org/nexus/content/repositories/linkrestreleases</url>
+		</repository>
+	</distributionManagement>
+
+	<repositories>
+		<!-- TODO: LinkRest will soon be in Central per
+			https://issues.sonatype.org/browse/OSSRH-13982
+			So 'linkrest-releases' repo reference will become unneeded...
+	    -->
+		<repository>
+			<id>linkrest-releases</id>
+			<name>Deployment Repository</name>
+			<url>http://maven.objectstyle.org/nexus/content/repositories/linkrestreleases</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<!-- TODO: Cayenne 4.0.M2 will soon be posted to Central,
+			 So 'cayenne-staging' repo reference will become unneeded...
+	    -->
+		<repository>
+			<id>cayenne-staging</id>
+			<name>Link Rest Dependencies Repo</name>
+			<url>https://repository.apache.org/content/repositories/orgapachecayenne-1003/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<dependency>
+    			<groupId>com.nhl.link.rest</groupId>
+    			<artifactId>link-rest</artifactId>
+    			<version>${link-rest-version}</version>
+			</dependency>
+
+			<!-- Let's only use the servlet spec used by Jetty. There is some confusion 
+				with it. Origin and version of this jar bundled with production jetty is 
+				"glassfish javax.servlet.3.1.0.b33", while appserver-launcher jetty artifacts 
+				rely on the Orbit version and won't work with anything else. -->
+			<dependency>
+				<groupId>org.eclipse.jetty.orbit</groupId>
+				<artifactId>javax.servlet</artifactId>
+				<version>${servlet-api-version}</version>
+			</dependency>
+
+			<dependency>
+				<artifactId>javax.inject</artifactId>
+				<groupId>javax.inject</groupId>
+				<version>1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j-version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-simple</artifactId>
+				<version>${slf4j-version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
+				<version>${slf4j-version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.ws.rs</groupId>
+				<artifactId>javax.ws.rs-api</artifactId>
+				<version>2.0.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.glassfish.jersey.containers</groupId>
+				<artifactId>jersey-container-servlet</artifactId>
+				<version>${jersey-version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.glassfish.jersey.test-framework</groupId>
+				<artifactId>jersey-test-framework-core</artifactId>
+				<version>${jersey-version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.glassfish.jersey.test-framework.providers</groupId>
+				<artifactId>jersey-test-framework-provider-inmemory</artifactId>
+				<version>${jersey-version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.cayenne</groupId>
+				<artifactId>cayenne-server</artifactId>
+				<version>${cayenne-version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.derby</groupId>
+				<artifactId>derby</artifactId>
+				<version>10.10.1.1</version>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.2</version>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.4</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<dependencies>
+
+		<!-- required runtime dependencies -->
+		<dependency>
+    		<groupId>com.nhl.link.rest</groupId>
+    		<artifactId>link-rest</artifactId>
+		</dependency>
+		<dependency>
+			<artifactId>javax.inject</artifactId>
+			<groupId>javax.inject</groupId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cayenne</groupId>
+			<artifactId>cayenne-server</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- Provided dependencies -->
+		<dependency>
+			<groupId>org.eclipse.jetty.orbit</groupId>
+			<artifactId>javax.servlet</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- unit test deps -->
+		<!-- TODO -->
+
+	</dependencies>
+
+</project>
