@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.objecstyle</groupId>
+	<groupId>org.objectstyle</groupId>
 	<artifactId>link-rest-cms-demo</artifactId>
 	<version>1.0-SNAPSHOT</version>
 
@@ -19,7 +20,7 @@
 
 		<!-- Custom properties (mostly framework versions) -->
 
-		<servlet-api-version>3.0.0.v201112011016</servlet-api-version>
+		<servlet-api-version>3.1.0</servlet-api-version>
 		<slf4j-version>1.7.10</slf4j-version>
 		<link-rest-version>1.13</link-rest-version>
 		<cayenne-version>4.0.M2</cayenne-version>
@@ -43,10 +44,8 @@
 	</distributionManagement>
 
 	<repositories>
-		<!-- TODO: LinkRest will soon be in Central per
-			https://issues.sonatype.org/browse/OSSRH-13982
-			So 'linkrest-releases' repo reference will become unneeded...
-	    -->
+		<!-- TODO: LinkRest will soon be in Central per https://issues.sonatype.org/browse/OSSRH-13982 
+			So 'linkrest-releases' repo reference will become unneeded... -->
 		<repository>
 			<id>linkrest-releases</id>
 			<name>Deployment Repository</name>
@@ -55,9 +54,8 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-		<!-- TODO: Cayenne 4.0.M2 will soon be posted to Central,
-			 So 'cayenne-staging' repo reference will become unneeded...
-	    -->
+		<!-- TODO: Cayenne 4.0.M2 will soon be posted to Central, So 'cayenne-staging' 
+			repo reference will become unneeded... -->
 		<repository>
 			<id>cayenne-staging</id>
 			<name>Link Rest Dependencies Repo</name>
@@ -72,18 +70,14 @@
 		<dependencies>
 
 			<dependency>
-    			<groupId>com.nhl.link.rest</groupId>
-    			<artifactId>link-rest</artifactId>
-    			<version>${link-rest-version}</version>
+				<groupId>com.nhl.link.rest</groupId>
+				<artifactId>link-rest</artifactId>
+				<version>${link-rest-version}</version>
 			</dependency>
 
-			<!-- Let's only use the servlet spec used by Jetty. There is some confusion 
-				with it. Origin and version of this jar bundled with production jetty is 
-				"glassfish javax.servlet.3.1.0.b33", while appserver-launcher jetty artifacts 
-				rely on the Orbit version and won't work with anything else. -->
 			<dependency>
-				<groupId>org.eclipse.jetty.orbit</groupId>
-				<artifactId>javax.servlet</artifactId>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
 				<version>${servlet-api-version}</version>
 			</dependency>
 
@@ -168,6 +162,15 @@
 					<artifactId>maven-source-plugin</artifactId>
 					<version>2.4</version>
 				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>2.6</version>
+					<configuration>
+						<failOnMissingWebXml>false</failOnMissingWebXml>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -176,8 +179,8 @@
 
 		<!-- required runtime dependencies -->
 		<dependency>
-    		<groupId>com.nhl.link.rest</groupId>
-    		<artifactId>link-rest</artifactId>
+			<groupId>com.nhl.link.rest</groupId>
+			<artifactId>link-rest</artifactId>
 		</dependency>
 		<dependency>
 			<artifactId>javax.inject</artifactId>
@@ -199,12 +202,15 @@
 			<artifactId>cayenne-server</artifactId>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet</artifactId>
+		</dependency>
 
 		<!-- Provided dependencies -->
 		<dependency>
-			<groupId>org.eclipse.jetty.orbit</groupId>
-			<artifactId>javax.servlet</artifactId>
-			<scope>provided</scope>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
 		</dependency>
 
 		<!-- unit test deps -->
