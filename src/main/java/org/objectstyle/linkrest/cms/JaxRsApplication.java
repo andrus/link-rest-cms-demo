@@ -5,14 +5,12 @@ import javax.ws.rs.ApplicationPath;
 
 import org.apache.cayenne.configuration.server.ServerRuntime;
 import org.apache.cayenne.configuration.server.ServerRuntimeBuilder;
-import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.objectstyle.linkrest.cms.derby.DerbyManager;
-import org.objectstyle.linkrest.cms.resource.ArticleResource;
+import org.objectstyle.linkrest.cms.resource.ArticleSubResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.nhl.link.rest.runtime.ILinkRestService;
 import com.nhl.link.rest.runtime.LinkRestBuilder;
 import com.nhl.link.rest.runtime.LinkRestRuntime;
 
@@ -41,23 +39,8 @@ public class JaxRsApplication extends ResourceConfig {
 		// MessageBodyWriters, etc)
 		register(lrRuntime.getFeature());
 
-		// ... this Jersey-specific magic makes ILinkRestService injectable in resources.. 
-		// a Jersey-agnostic alternative is this:
-		//
-		//    @Context
-		//    private Configuration config;
-		//  
-		//    ILinkRestService service = LinkRestRuntime.service(ILinkRestService.class, config);
-		//
-		register(new AbstractBinder() {
-			@Override
-			protected void configure() {
-				bind(lrRuntime.service(ILinkRestService.class)).to(ILinkRestService.class);
-			}
-		});
-
 		// expose application REST endpoints
-		packages(ArticleResource.class.getPackage().getName());
+		packages(ArticleSubResource.class.getPackage().getName());
 	}
 
 	@PreDestroy
