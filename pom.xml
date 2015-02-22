@@ -246,6 +246,7 @@
 					<version>2.6</version>
 					<configuration>
 						<failOnMissingWebXml>false</failOnMissingWebXml>
+						<warName>link-rest-cms-demo</warName>
 					</configuration>
 				</plugin>
 
