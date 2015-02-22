@@ -11,33 +11,33 @@ If you want to build a real app based on this example, start by cloning the proj
 
 Resources:
 
-	http://127.0.0.1:8080/link-rest-cms-demo/rest/domain
-	http://127.0.0.1:8080/link-rest-cms-demo/rest/domain/{domainId}/articles
+	/link-rest-cms-demo/domain
+	/link-rest-cms-demo/domain/{domainId}/articles
 
 Sample Operations:
 
-    curl -i -X POST 'http://127.0.0.1:8080/link-rest-cms-demo/rest/domain' \
+    curl -i -X POST 'http://127.0.0.1:8080/link-rest-cms-demo/domain' \
          -d '{"vhost":"mysite1.example.org","name":"My Site #1"}'
          
-    curl -i -X GET 'http://127.0.0.1:8080/link-rest-cms-demo/rest/domain'
+    curl -i -X GET 'http://127.0.0.1:8080/link-rest-cms-demo/domain'
     
     # query String is a URL encoded form of 
     # 'include={"path":"articles","sort":"publishedOn"}&exclude=articles.body'
-    curl -i -X GET  'http://127.0.0.1:8080/link-rest-cms-demo/rest/domain?include=%7B%22path%22%3A%22articles%22%2C%22sort%22%3A%22publishedOn%22%7D&exclude=articles.body'
+    curl -i -X GET  'http://127.0.0.1:8080/link-rest-cms-demo/domain?include=%7B%22path%22%3A%22articles%22%2C%22sort%22%3A%22publishedOn%22%7D&exclude=articles.body'
          
-    curl -i -X PUT 'http://127.0.0.1:8080/link-rest-cms-demo/rest/domain' \
+    curl -i -X PUT 'http://127.0.0.1:8080/link-rest-cms-demo/domain' \
          -d '{"id":1, "name":"My Site about LinkRest"}'
 
-    curl -i -X GET 'http://127.0.0.1:8080/link-rest-cms-demo/rest/domain/1/articles'
-    curl -i -X GET 'http://127.0.0.1:8080/link-rest-cms-demo/rest/domain/1/articles?include=domain'
+    curl -i -X GET 'http://127.0.0.1:8080/link-rest-cms-demo/domain/1/articles'
+    curl -i -X GET 'http://127.0.0.1:8080/link-rest-cms-demo/domain/1/articles?include=domain'
     
-    curl -i -X POST 'http://127.0.0.1:8080/link-rest-cms-demo/rest/domain/1/articles' \
+    curl -i -X POST 'http://127.0.0.1:8080/link-rest-cms-demo/domain/1/articles' \
          -d '[
               {"title":"LinkRest Presentation","body":"Here is how to use LinkRest"},
               {"title":"Cayenne Goodies", "body":"This is an article about Apache Cayenne"}
              ]'
              
-    curl -i -X PUT 'http://127.0.0.1:8080/link-rest-cms-demo/rest/domain/1/articles' \
+    curl -i -X PUT 'http://127.0.0.1:8080/link-rest-cms-demo/domain/1/articles' \
          -d '{"id":1,"title":"LinkRest latest Presentation"}'
          
-    curl -i -X DELETE 'http://127.0.0.1:8080/link-rest-cms-demo/rest/domain/1/articles/1'
+    curl -i -X DELETE 'http://127.0.0.1:8080/link-rest-cms-demo/domain/1/articles/1'

@@ -18,7 +18,7 @@ import com.nhl.link.rest.runtime.LinkRestRuntime;
  * A Jersey framework-specific JAX-RS Application class that allows us to
  * bootstrap Cayenne and LinkRest.
  */
-@ApplicationPath("rest")
+@ApplicationPath("/")
 public class JaxRsApplication extends ResourceConfig {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(JaxRsApplication.class);
