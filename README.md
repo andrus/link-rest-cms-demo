@@ -12,7 +12,9 @@ If you want to build a real app based on this example, start by cloning the proj
 Resources:
 
 	/link-rest-cms-demo/domain
+	/link-rest-cms-demo/domain/{domainId}
 	/link-rest-cms-demo/domain/{domainId}/articles
+	/link-rest-cms-demo/domain/{domainId}/articles/{articleId}
 
 Sample Operations:
 
