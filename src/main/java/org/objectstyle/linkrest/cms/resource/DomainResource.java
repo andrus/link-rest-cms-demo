@@ -56,6 +56,6 @@ public class DomainResource {
 	 */
 	@Path("{domainId}/articles")
 	public ArticleSubResource subscriptions(@PathParam("domainId") int domainId) {
-		return new ArticleSubResource(domainId);
+		return new ArticleSubResource(config, domainId);
 	}
 }

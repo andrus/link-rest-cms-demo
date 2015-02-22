@@ -17,16 +17,14 @@ import com.nhl.link.rest.LinkRest;
 
 /**
  * A sub-resource executed in a context of a given Domain ID.
- *
  */
-@Path("article")
 public class ArticleSubResource {
 
-	@Context
 	private Configuration config;
 	private int domainId;
 
-	public ArticleSubResource(int domainId) {
+	public ArticleSubResource(Configuration config, int domainId) {
+		this.config = config;
 		this.domainId = domainId;
 	}
 
