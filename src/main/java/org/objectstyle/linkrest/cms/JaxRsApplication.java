@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.nhl.link.rest.runtime.LinkRestBuilder;
-import com.nhl.link.rest.runtime.LinkRestRuntime;
 
 /**
  * A Jersey framework-specific JAX-RS Application class that allows us to
@@ -33,11 +32,7 @@ public class JaxRsApplication extends ResourceConfig {
 		this.cayenneRuntime = createCayenne(derbyManager.getUrl(), derbyManager.getDriver());
 
 		// init and bootstrap LinkRest
-		LinkRestRuntime lrRuntime = createLinkRest(cayenneRuntime);
-
-		// ... this enables LinkRest JAX RS extensions (ExceptionMappers,
-		// MessageBodyWriters, etc)
-		register(lrRuntime.getFeature());
+		register(LinkRestBuilder.build(cayenneRuntime));
 
 		// expose application REST endpoints
 		packages(ArticleSubResource.class.getPackage().getName());
@@ -58,10 +53,6 @@ public class JaxRsApplication extends ResourceConfig {
 			derbyManager.shutdown();
 			derbyManager = null;
 		}
-	}
-
-	private static LinkRestRuntime createLinkRest(ServerRuntime cayenneRuntime) {
-		return new LinkRestBuilder().cayenneRuntime(cayenneRuntime).build();
 	}
 
 	private static ServerRuntime createCayenne(String url, String driver) {
