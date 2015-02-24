@@ -34,15 +34,6 @@
 		<tag>HEAD</tag>
 	</scm>
 
-	<distributionManagement>
-		<repository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>linkrest-releases</id>
-			<name>Deployment Repository</name>
-			<url>http://maven.objectstyle.org/nexus/content/repositories/linkrestreleases</url>
-		</repository>
-	</distributionManagement>
-
 	<repositories>
 		<!-- TODO: LinkRest will soon be in Central per https://issues.sonatype.org/browse/OSSRH-13982 
 			So 'linkrest-releases' repo reference will become unneeded... -->
