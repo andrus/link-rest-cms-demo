@@ -3,6 +3,8 @@ package org.objectstyle.linkrest.cms;
 import javax.annotation.PreDestroy;
 import javax.ws.rs.ApplicationPath;
 
+import org.apache.cayenne.access.dbsync.CreateIfNoSchemaStrategy;
+import org.apache.cayenne.access.dbsync.SchemaUpdateStrategy;
 import org.apache.cayenne.configuration.server.ServerRuntime;
 import org.apache.cayenne.configuration.server.ServerRuntimeBuilder;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -57,13 +59,10 @@ public class JaxRsApplication extends ResourceConfig {
 
 	private static ServerRuntime createCayenne(String url, String driver) {
 
-		// TODO: once https://issues.apache.org/jira/browse/CAY-1988 is fixed
-		// (in Cayenne 4.0.M3 perhaps),
-		// we can remove DataNode from cayenne-project.xml, so a "synthetic"
-		// node can be created by the builder; then we'll also need to set
-		// CreateIfNoSchemaStrategy here in the builder
-
-		return new ServerRuntimeBuilder().jdbcDriver(driver).url(url).addConfig("cayenne-project.xml").build();
+		return new ServerRuntimeBuilder().jdbcDriver(driver).url(url).addConfig("cayenne-project.xml")
+				// this would ensure test schema creation on the first run
+				.addModule(binder -> binder.bind(SchemaUpdateStrategy.class).to(CreateIfNoSchemaStrategy.class))
+				.build();
 	}
 
 	private static DerbyManager createDerby() {
