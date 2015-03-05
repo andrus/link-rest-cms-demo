@@ -64,7 +64,7 @@
 		<pluginRepository>
 			<id>cayenne-staging</id>
 			<name>Link Rest Dependencies Repo</name>
-			<url>https://repository.apache.org/content/repositories/orgapachecayenne-1003/</url>
+			<url>https://repository.apache.org/content/repositories/orgapachecayenne-1005/</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
