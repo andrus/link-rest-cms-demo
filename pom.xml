@@ -22,7 +22,7 @@
 
 		<servlet-api-version>3.1.0</servlet-api-version>
 		<slf4j-version>1.7.10</slf4j-version>
-		<link-rest-version>1.14-SNAPSHOT</link-rest-version>
+		<link-rest-version>1.14</link-rest-version>
 		<cayenne-version>4.0.M2</cayenne-version>
 		<jersey-version>2.16</jersey-version>
 	</properties>
@@ -33,43 +33,6 @@
 		<url>https://github.com/andrus/link-rest-cms-demo</url>
 		<tag>HEAD</tag>
 	</scm>
-
-	<repositories>
-		<!-- TODO: LinkRest will soon be in Central per https://issues.sonatype.org/browse/OSSRH-13982 
-			So 'linkrest-releases' repo reference will become unneeded... -->
-		<repository>
-			<id>linkrest-releases</id>
-			<name>Deployment Repository</name>
-			<url>http://maven.objectstyle.org/nexus/content/repositories/linkrestreleases</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<!-- TODO: Cayenne 4.0.M2 will soon be posted to Central, So 'cayenne-staging' 
-			repo reference will become unneeded... -->
-		<repository>
-			<id>cayenne-staging</id>
-			<name>Link Rest Dependencies Repo</name>
-			<url>https://repository.apache.org/content/repositories/orgapachecayenne-1005/</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-
-
-	</repositories>
-	<pluginRepositories>
-		<!-- TODO: Cayenne 4.0.M2 will soon be posted to Central, So 'cayenne-staging' 
-			repo reference will become unneeded... -->
-		<pluginRepository>
-			<id>cayenne-staging</id>
-			<name>Link Rest Dependencies Repo</name>
-			<url>https://repository.apache.org/content/repositories/orgapachecayenne-1005/</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
 
 	<dependencyManagement>
 		<dependencies>
