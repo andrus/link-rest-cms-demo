@@ -32,7 +32,7 @@ public class DomainResource {
 	@GET
 	@Path("{domainId}")
 	public DataResponse<Domain> getOne(@PathParam("domainId") int id, @Context UriInfo uriInfo) {
-		return LinkRest.select(Domain.class, config).byId(id).uri(uriInfo).select();
+		return LinkRest.select(Domain.class, config).byId(id).uri(uriInfo).selectOne();
 	}
 
 	@POST
