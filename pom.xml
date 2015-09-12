@@ -147,8 +147,7 @@
 			<artifactId>slf4j-api</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		<!-- providing slf4j binding for use with unit tests that require SLF and 
-			for clean Cayenne output. -->
+		<!-- providing slf4j binding for use with unit tests that require SLF and for clean Cayenne output. -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
@@ -214,8 +213,9 @@
 
 		<plugins>
 
-			<!-- Generate Cayenne classes in Maven; of course you can do the same 
-				using Modeler -->
+			<!-- Generate Cayenne classes during Maven build. 
+			     Alternatively this can done from CayenneModeler GUI. 
+			-->
 			<plugin>
 				<groupId>org.apache.cayenne.plugins</groupId>
 				<artifactId>maven-cayenne-plugin</artifactId>
