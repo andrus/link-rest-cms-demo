@@ -35,8 +35,8 @@ public class ArticleSubResource {
 
 	@GET
 	public DataResponse<Article> getAll(@Context UriInfo uriInfo) {
-		return LinkRest.select(Article.class, config).toManyParent(Domain.class, domainId, Domain.ARTICLES)
-				.uri(uriInfo).select();
+		return LinkRest.select(Article.class, config).toManyParent(Domain.class, domainId, Domain.ARTICLES).uri(uriInfo)
+				.select();
 	}
 
 	@GET
@@ -47,15 +47,14 @@ public class ArticleSubResource {
 	}
 
 	@POST
-	public DataResponse<Article> create(String data) {
-		return LinkRest.create(Article.class, config).toManyParent(Domain.class, domainId, Domain.ARTICLES)
-				.process(data);
+	public SimpleResponse create(String data) {
+		return LinkRest.create(Article.class, config).toManyParent(Domain.class, domainId, Domain.ARTICLES).sync(data);
 	}
 
 	@PUT
-	public DataResponse<Article> createOrUpdate(String data) {
+	public SimpleResponse createOrUpdate(String data) {
 		return LinkRest.createOrUpdate(Article.class, config).toManyParent(Domain.class, domainId, Domain.ARTICLES)
-				.process(data);
+				.sync(data);
 	}
 
 	@DELETE

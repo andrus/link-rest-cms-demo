@@ -15,6 +15,7 @@ import org.objectstyle.linkrest.cms.cayenne.Domain;
 
 import com.nhl.link.rest.DataResponse;
 import com.nhl.link.rest.LinkRest;
+import com.nhl.link.rest.SimpleResponse;
 
 @Path("domain")
 @Produces(MediaType.APPLICATION_JSON)
@@ -35,21 +36,21 @@ public class DomainResource {
 	}
 
 	@POST
-	public DataResponse<Domain> create(String data) {
+	public SimpleResponse create(String data) {
 
 		// 'data' is a single object or an array of objects..
 
-		return LinkRest.create(Domain.class, config).process(data);
+		return LinkRest.create(Domain.class, config).sync(data);
 	}
 
 	@PUT
-	public DataResponse<Domain> createOrUpdate(String data) {
+	public SimpleResponse createOrUpdate(String data) {
 
 		// 'data' is a single object or an array of objects... Objects without
 		// IDs will be treated as "new". LinkRest will try to locate objects
 		// with IDs, and update them if found, or create if not
 
-		return LinkRest.createOrUpdate(Domain.class, config).process(data);
+		return LinkRest.createOrUpdate(Domain.class, config).sync(data);
 	}
 
 	/**

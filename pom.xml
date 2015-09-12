@@ -22,7 +22,7 @@
 
 		<servlet-api-version>3.1.0</servlet-api-version>
 		<slf4j-version>1.7.10</slf4j-version>
-		<link-rest-version>1.14</link-rest-version>
+		<link-rest-version>1.19</link-rest-version>
 		<cayenne-version>4.0.M2</cayenne-version>
 		<jersey-version>2.16</jersey-version>
 	</properties>
